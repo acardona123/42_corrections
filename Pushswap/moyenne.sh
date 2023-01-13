@@ -10,7 +10,10 @@ MAX=$2
 ITER=$3
 LIM=$4
 
-
+if [ $MIN -gt $MAX ]; then
+    echo "Error: MIN must be less than or equal to MAX"
+    exit 1
+fi
 
 MOY=0
 NB_SUP_LIM=0
@@ -22,7 +25,9 @@ echo -e "Limit = $LIM\n"
 echo "Calcul en cours..."
 
 for i in $(seq 1 $ITER); do
-	VAL=$( ./push_swap $(./randomizer.sh $MIN $MAX)| wc -l)
+	VAL=$( ./push_swap $(for i in $(seq $MIN $MAX | shuf); do
+    echo -n $i ''
+done)| wc -l)
 #	echo "  Val($i) = $VAL"
 	MOY=`expr $MOY + $VAL`
 	if [ $VAL -gt $LIM ];
